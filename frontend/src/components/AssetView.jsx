@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart, ComposedChart, Legend, BarChart, Bar, Cell } from 'recharts';
-import { Cpu, AlertTriangle, Cloud, Thermometer, Wind, SlidersHorizontal, Info } from 'lucide-react';
+import { Cpu, AlertTriangle, Cloud, Thermometer, Wind, SlidersHorizontal, Info, Camera } from 'lucide-react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Environment } from '@react-three/drei';
+import { WindTurbine, SolarPanelArray } from './ThreeModels';
 
 const AssetView = ({ asset }) => {
   const [data, setData] = useState(null);
@@ -113,15 +116,40 @@ const AssetView = ({ asset }) => {
         <p>{asset.location} • {asset.capacity_mw} MW • {asset.type.toUpperCase()}</p>
       </div>
       
-      {/* Hybrid Model Justification Panel */}
-      <div className="glass-panel" style={{ marginBottom: '1.5rem', backgroundColor: 'rgba(59, 130, 246, 0.05)', borderLeft: '4px solid var(--accent-blue)' }}>
-         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, color: 'var(--accent-blue)', marginBottom: '0.5rem' }}>
-            <Info size={18} /> Architecture Notice: Hybrid ML + Digital Twin
+      <div className="dashboard-grid">
+         <div className="glass-panel" style={{ gridColumn: '1 / 2', backgroundColor: 'rgba(59, 130, 246, 0.05)', borderLeft: '4px solid var(--accent-blue)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, color: 'var(--accent-blue)', marginBottom: '0.5rem' }}>
+               <Info size={18} /> Architecture Notice: Hybrid ML + Digital Twin
+            </div>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+               <strong>Base ML Model</strong> learns historical weather-to-generation patterns. <br/>
+               <strong>Digital Twin Layer</strong> explicitly corrects predictions based on real-time physical constraints (e.g., thermal derating, wake effects) ensuring the forecast is physically grounded and explainable.
+            </p>
          </div>
-         <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-            <strong>Base ML Model</strong> learns historical weather-to-generation patterns. <br/>
-            <strong>Digital Twin Layer</strong> explicitly corrects predictions based on real-time physical constraints (e.g., thermal derating, wake effects) ensuring the forecast is physically grounded and explainable.
-         </p>
+
+         {/* 3D Digital Twin Viewer */}
+         <div className="glass-panel" style={{ gridColumn: '2 / -1', padding: 0, overflow: 'hidden', position: 'relative', minHeight: '300px' }}>
+            <div style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 10, display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0,0,0,0.5)', padding: '0.5rem 1rem', borderRadius: '2rem', backdropFilter: 'blur(4px)' }}>
+               <Camera size={16} color="var(--accent-solar)" />
+               <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Live Digital Twin Visualization</span>
+            </div>
+            <Canvas camera={{ position: [5, 3, 5], fov: 50 }}>
+               <ambientLight intensity={1 - (simParams.cloud_cover / 100) * 0.8} />
+               <directionalLight 
+                  position={[10, 10, 5]} 
+                  intensity={1.5 - (simParams.cloud_cover / 100)} 
+                  castShadow
+               />
+               <Environment preset="city" />
+               <OrbitControls autoRotate={asset.type === 'solar'} autoRotateSpeed={0.5} enableZoom={false} maxPolarAngle={Math.PI / 2 - 0.1} />
+               
+               {asset.type === 'wind' ? (
+                 <WindTurbine windSpeed={simParams.wind_speed} />
+               ) : (
+                 <SolarPanelArray cloudCover={simParams.cloud_cover} />
+               )}
+            </Canvas>
+         </div>
       </div>
 
       <div className="dashboard-grid">
