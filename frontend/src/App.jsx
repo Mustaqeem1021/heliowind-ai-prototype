@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Wind, LayoutDashboard, Activity, Settings, Zap } from 'lucide-react';
+import { Sun, Wind, LayoutDashboard, Activity, Settings, Zap, Hexagon } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import AssetView from './components/AssetView';
 import './index.css';
@@ -28,8 +28,14 @@ function App() {
       {/* Sidebar */}
       <div className="sidebar">
         <div className="logo">
-          <Zap size={28} color="#f59e0b" />
-          <span>HelioWind AI</span>
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px' }}>
+            <Hexagon size={32} color="var(--accent-wind)" strokeWidth={1.5} style={{ position: 'absolute', transform: 'rotate(90deg)' }} />
+            <Sun size={16} color="var(--accent-solar)" strokeWidth={2.5} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <span className="gradient-text">HelioWind</span>
+            <span style={{ fontWeight: 300, marginLeft: '4px', fontSize: '1.2rem', color: 'var(--text-main)' }}>AI</span>
+          </div>
         </div>
 
         <div 
