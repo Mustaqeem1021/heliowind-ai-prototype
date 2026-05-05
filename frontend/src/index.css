@@ -26,8 +26,10 @@ body {
   color: var(--text-main);
   min-height: 100vh;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.1) 0px, transparent 50%);
+    linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)),
+    url('/bg.png');
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 
