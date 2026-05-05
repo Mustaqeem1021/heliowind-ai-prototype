@@ -59,19 +59,6 @@ body {
   color: var(--text-main);
 }
 
-.gradient-text {
-  background: linear-gradient(to right, var(--accent-solar), var(--accent-wind), var(--accent-solar));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
-}
-
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
-}
 
 .nav-item {
   padding: 0.75rem 1rem;

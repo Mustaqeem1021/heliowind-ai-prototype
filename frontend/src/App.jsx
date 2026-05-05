@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Wind, LayoutDashboard, Activity, Settings, Zap, Hexagon } from 'lucide-react';
+import { Sun, Wind, LayoutDashboard, Activity, Settings, Zap } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import AssetView from './components/AssetView';
 import './index.css';
@@ -27,14 +27,14 @@ function App() {
     <div className="app-container">
       {/* Sidebar */}
       <div className="sidebar">
-        <div className="logo">
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px' }}>
-            <Hexagon size={32} color="var(--accent-wind)" strokeWidth={1.5} style={{ position: 'absolute', transform: 'rotate(90deg)' }} />
-            <Sun size={16} color="var(--accent-solar)" strokeWidth={2.5} />
+        <div className="logo" style={{ gap: '0.5rem' }}>
+          <div style={{ backgroundColor: '#ccff00', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 15px rgba(204, 255, 0, 0.4)' }}>
+             <Zap size={16} color="#000" fill="#000" strokeWidth={1} />
           </div>
-          <div style={{ display: 'flex', alignItems: 'baseline' }}>
-            <span className="gradient-text">HelioWind</span>
-            <span style={{ fontWeight: 300, marginLeft: '4px', fontSize: '1.2rem', color: 'var(--text-main)' }}>AI</span>
+          <div style={{ display: 'flex', alignItems: 'baseline', letterSpacing: '-1.5px', fontSize: '1.75rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <span style={{ fontWeight: 800, color: '#ffffff' }}>helio</span>
+            <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>wind</span>
+            <span style={{ color: '#ccff00', fontWeight: 800 }}>.</span>
           </div>
         </div>
 
