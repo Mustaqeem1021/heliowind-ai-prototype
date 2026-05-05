@@ -1,27 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { PlayCircle, PauseCircle } from 'lucide-react';
 
-const slides = [
+const windSlides = [
   {
-    image: '/explainer_1.png',
+    image: '/wind_1.png',
     title: 'The "Brain" of the Grid',
     description: 'We connect a digital neural network directly to physical turbines, processing telemetry in real-time.'
   },
   {
-    image: '/explainer_2.png',
+    image: '/wind_2.png',
     title: 'Holographic Twin',
-    description: 'Every solar panel is cloned into a digital twin, allowing us to simulate thermal stress before it happens.'
+    description: 'Every turbine is cloned into a 3D digital twin, allowing us to simulate mechanical stress before it happens.'
   },
   {
-    image: '/explainer_3.png',
+    image: '/wind_3.png',
     title: 'Storm Prediction',
     description: 'When bad weather hits, the data grid dynamically re-routes power forecasts with extreme precision.'
   }
 ];
 
-const ExplainerCarousel = () => {
+const solarSlides = [
+  {
+    image: '/solar_1.png',
+    title: 'The "Brain" of the Grid',
+    description: 'We connect a digital neural network directly to the solar farm, processing irradiation and temperature in real-time.'
+  },
+  {
+    image: '/solar_2.png',
+    title: 'Holographic Twin',
+    description: 'Every solar panel is cloned into a digital twin, allowing us to simulate thermal derating before it happens.'
+  },
+  {
+    image: '/solar_3.png',
+    title: 'Cloud Cover Prediction',
+    description: 'When heavy clouds roll in, the data grid dynamically adjusts output forecasts with extreme precision.'
+  }
+];
+
+const ExplainerCarousel = ({ assetType }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  const slides = assetType === 'wind' ? windSlides : solarSlides;
 
   useEffect(() => {
     let interval;
