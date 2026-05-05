@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart, ComposedChart, Legend, BarChart, Bar, Cell } from 'recharts';
-import { Cpu, AlertTriangle, Cloud, Thermometer, Wind, SlidersHorizontal, Info, Camera } from 'lucide-react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
-import { WindTurbine, SolarPanelArray } from './ThreeModels';
+import { Cpu, AlertTriangle, Cloud, Thermometer, Wind, SlidersHorizontal, Info, PlayCircle } from 'lucide-react';
+import ExplainerCarousel from './ExplainerCarousel';
 
 const AssetView = ({ asset }) => {
   const [data, setData] = useState(null);
@@ -127,28 +125,16 @@ const AssetView = ({ asset }) => {
             </p>
          </div>
 
-         {/* 3D Digital Twin Viewer */}
-         <div className="glass-panel" style={{ gridColumn: '2 / -1', padding: 0, overflow: 'hidden', position: 'relative', minHeight: '300px' }}>
-            <div style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 10, display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0,0,0,0.5)', padding: '0.5rem 1rem', borderRadius: '2rem', backdropFilter: 'blur(4px)' }}>
-               <Camera size={16} color="var(--accent-solar)" />
-               <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Live Digital Twin Visualization</span>
+         {/* Cinematic Explainer Video Mock */}
+         <div className="glass-panel" style={{ gridColumn: '2 / -1', padding: 0, overflow: 'hidden', position: 'relative', minHeight: '300px', display: 'flex', border: '1px solid var(--panel-border)' }}>
+            <div style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 10, display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0,0,0,0.6)', padding: '0.5rem 1rem', borderRadius: '2rem', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+               <PlayCircle size={16} color="#ccff00" />
+               <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff', letterSpacing: '0.5px' }}>Concept Animation</span>
             </div>
-            <Canvas camera={{ position: [5, 3, 5], fov: 50 }}>
-               <ambientLight intensity={1 - (simParams.cloud_cover / 100) * 0.8} />
-               <directionalLight 
-                  position={[10, 10, 5]} 
-                  intensity={1.5 - (simParams.cloud_cover / 100)} 
-                  castShadow
-               />
-               <Environment preset="city" />
-               <OrbitControls autoRotate={asset.type === 'solar'} autoRotateSpeed={0.5} enableZoom={false} maxPolarAngle={Math.PI / 2 - 0.1} />
-               
-               {asset.type === 'wind' ? (
-                 <WindTurbine windSpeed={simParams.wind_speed} />
-               ) : (
-                 <SolarPanelArray cloudCover={simParams.cloud_cover} />
-               )}
-            </Canvas>
+            
+            <div style={{ flex: 1, width: '100%', height: '100%' }}>
+               <ExplainerCarousel />
+            </div>
          </div>
       </div>
 
